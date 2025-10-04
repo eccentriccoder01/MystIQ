@@ -642,14 +642,24 @@ class MystIQ {
   }
 
   startTimer() {
+    // Clear any existing timer before starting a new one
+    if (this.timer) {
+      clearInterval(this.timer);
+      this.timer = null;
+    }
+
     this.timeRemaining = this.settings.timeLimit;
     this.updateTimer();
 
     this.timer = setInterval(() => {
-      this.timeRemaining--;
+      // Decrement and clamp at 0 to avoid negatives
+      this.timeRemaining = Math.max(0, this.timeRemaining - 1);
       this.updateTimer();
 
       if (this.timeRemaining <= 0) {
+        // Ensure the interval stops before moving on
+        clearInterval(this.timer);
+        this.timer = null;
         this.nextQuestion(); // Auto-advance on time out
       }
     }, 1000);
@@ -658,6 +668,7 @@ class MystIQ {
   resetTimer() {
     if (this.timer) {
       clearInterval(this.timer);
+      this.timer = null;
     }
     this.timeRemaining = this.settings.timeLimit; // Reset time for the new question
     this.updateTimer();
@@ -668,7 +679,8 @@ class MystIQ {
     const timerElement = document.getElementById('timeLeft');
     const timerContainer = document.getElementById('timerContainer');
 
-    timerElement.textContent = this.timeRemaining;
+    // Never display negative values
+    timerElement.textContent = Math.max(0, this.timeRemaining);
 
     // Visual feedback for time running out
     if (this.timeRemaining <= 5) {
@@ -696,6 +708,7 @@ class MystIQ {
     this.endTime = new Date();
     if (this.timer) {
       clearInterval(this.timer);
+      this.timer = null;
     }
 
     this.showResults();
