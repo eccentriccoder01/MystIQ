@@ -224,6 +224,7 @@ class MystIQ {
       this.hideLoading();
       this.initializeQuiz();
       this.showScreen('quiz');
+      window.location.href = '#quizScreen'; // Navigate to quiz screen
     } catch (error) {
       this.hideLoading();
       this.showNotification('Failed to load questions. Please try again.', 'error');
@@ -713,6 +714,7 @@ class MystIQ {
 
     this.showResults();
     this.showScreen('results');
+    window.location.href = '#resultsScreen'; // Navigate to results screen
   }
 
   showResults() {
@@ -785,7 +787,7 @@ class MystIQ {
     const bestScore = Math.max(...stats.map(s => s.percentage));
 
     const statsContent = `
-      <div class="stats-modal">
+      <div class="stats-modal" id="statsContent">
         <h3>Your Quiz Statistics</h3>
         <div class="stats-grid">
           <div class="stat-item">
@@ -815,6 +817,7 @@ class MystIQ {
     `;
 
     this.showModal('Statistics', statsContent);
+    window.location.href = '#statsContent'; // Ensure focus is on top
   }
 
   showModal(title, content) {
@@ -881,6 +884,7 @@ class MystIQ {
     this.selectedTopics = []; // Clear selected topics
     this.updateSelectedTopicsUI(); // Update UI to reflect cleared topics
     this.showScreen('welcome');
+    window.location.href = '#welcomeScreen'; // Reload to reset quiz to play from start
   }
 
   showLoading(message) {
