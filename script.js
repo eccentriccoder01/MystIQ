@@ -3,6 +3,8 @@
  * Features: Real-time questions, multiple themes, advanced scoring, analytics
  */
 
+
+
 class MystIQ {
   constructor() {
     this.currentQuestion = 0;
@@ -803,13 +805,15 @@ class MystIQ {
             <span class="stat-label">Best Score</span>
           </div>
         </div>
+        <h3 class="recentScoreText">Recent Scores</h3>
         <div class="recent-scores">
-          <h4>Recent Scores</h4>
           ${stats.slice(-5).reverse().map(stat => `
             <div class="recent-score">
-              <span>${stat.percentage}%</span>
-              <span>${stat.topics.join(', ')}</span>
-              <span>${new Date(stat.date).toLocaleDateString()}</span>
+            <div class="recent-score-info">
+              <span class="percentage-info">${stat.percentage}%</span>
+              <span class="topic-info">${stat.topics.join(', ').toUpperCase()}</span>
+              <span class="date-info">${new Date(stat.date).toLocaleDateString()}</span>
+              </div>
             </div>
           `).join('')}
         </div>
